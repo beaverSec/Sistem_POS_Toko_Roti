@@ -33,3 +33,9 @@ SETELAH ITU
 2. Buat halaman kasir index.php — tampilkan daftar menu dari DB, keranjang belanja, input uang bayar, dan tampilkan kembalian secara otomatis
    Kembalian bisa dihitung langsung di JS saat kasir input uang — tidak perlu tunggu PHP
 3. Buat halaman manajemen menu menu.php — tabel daftar menu, tombol tambah, edit, dan hapus
+   
+SETELAH ITU
+1. Buat halaman laporan laporan.php — tabel transaksi per hari, total pendapatan
+   Halaman ini hanya ditampilkan untuk role manajer — backend yang handle redirect-nya
+2. Buat tampilan struk sederhana setelah transaksi berhasil — bisa berupa halaman baru atau popup
+3. Pastikan tampilan responsif dan nyaman dipakai di layar laptop — font cukup besar, tombol mudah diklik
