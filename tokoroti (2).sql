@@ -293,3 +293,51 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+/*Penggunaan password_hash() di PHP*/
+mysql> ALTER TABLE karyawan
+    -> ADD COLUMN username VARCHAR(50) AFTER nama_karyawan,
+    -> ADD COLUMN password VARCHAR(255) AFTER username,
+    -> ADD COLUMN is_active TINYINT(1) DEFAULT 1 AFTER password;
+/*Query OK, 0 rows affected, 1 warning (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 1*/
+
+mysql> -- Mengisi data untuk Pedro Pascal
+mysql> UPDATE karyawan
+    -> SET username = 'pedro.pascal',
+    ->     password = MD5('pedro123')
+    -> WHERE id_karyawan = 'K001';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+mysql> -- Mengisi data untuk Theo James
+mysql> UPDATE karyawan
+    -> SET username = 'theo.james',
+    ->     password = MD5('theo123')
+    -> WHERE id_karyawan = 'K002';
+
+mysql>
+mysql> -- Mengisi data untuk Paul Mescal
+mysql> UPDATE karyawan
+    -> SET username = 'paul.mescal',
+    ->     password = MD5('paul123')
+    -> WHERE id_karyawan = 'K003';
+  
+
+/*Perbaikan View transaksilengkap*/
+mysql> CREATE OR REPLACE VIEW transaksilengkap AS
+    -> SELECT *
+    -> FROM transaksi
+    -> -- ... (tambahkan join Anda di sini jika ada)
+    -> ORDER BY waktu_transaksi DESC;
+
+mysql> ALTER TABLE menu
+    -> ADD COLUMN is_deleted TINYINT(1) DEFAULT 0;
+/*Query OK, 0 rows affected, 1 warning (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 1*/
+
+mysql> SELECT * FROM menu WHERE is_deleted = 0;
+
+
+
