@@ -1,5 +1,5 @@
 # Sistem_POS_Toko_Roti
-
+TEST TEST
 ## Database
 1. Tambah kolom username, password, is_active ke tabel karyawan
    Password cukup di-hash pakai MD5 atau password_hash() PHP — tidak perlu JWT
