@@ -1,7 +1,7 @@
 # Sistem_POS_Toko_Roti
 TEST TEST
 ## Database
-1. Tambah kolom username, password, is_active ke tabel karyawan
+1. Tambah kolom username, password, is_active ke tabel karyawan ✅
    Password cukup di-hash pakai MD5 atau password_hash() PHP — tidak perlu JWT
 
 2. Perbaiki bug di view transaksilengkap — syntax ORDER BY ... AS DESCdesc ASC tidak valid, ganti ke ORDER BY waktu_transaksi DESC
@@ -17,7 +17,7 @@ SETELAH ITU
    Ini penting karena aplikasi jalan lokal — semua harus pakai versi database yang sama
 
 ## Backend
-1. Buat koneksi.php — satu file koneksi ke MySQL yang di-include oleh semua halaman
+1. Buat koneksi.php — satu file koneksi ke MySQL yang di-include oleh semua halaman ✅
 2. Buat login.php dan logout.php — cek username + password dari DB, simpan ke $_SESSION
    Cukup pakai session_start() dan $_SESSION['role'], tidak perlu JWT
 3. Buat proses/transaksi.php — terima data dari form kasir, hitung total + kembalian, simpan ke tabel transaksi dan detail_transaksi sekaligus
