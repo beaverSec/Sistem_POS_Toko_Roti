@@ -307,8 +307,6 @@ mysql> UPDATE karyawan
     -> SET username = 'pedro.pascal',
     ->     password = MD5('pedro123')
     -> WHERE id_karyawan = 'K001';
-Query OK, 1 row affected (0.02 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
 
 mysql>
 mysql> -- Mengisi data untuk Theo James
@@ -338,6 +336,138 @@ mysql> ALTER TABLE menu
 Records: 0  Duplicates: 0  Warnings: 1*/
 
 mysql> SELECT * FROM menu WHERE is_deleted = 0;
+
+-- Menghapus view lama dan membuat ulang dengan syntax yang benar
+DROP VIEW IF EXISTS `transaksilengkap`;
+
+CREATE VIEW `transaksilengkap` AS 
+SELECT 
+    `t`.`id_transaksi`, 
+    `t`.`waktu_transaksi`, 
+    `k`.`nama_karyawan`, 
+    `m`.`nama_menu`, 
+    `dt`.`jumlah`, 
+    `m`.`harga`, 
+    `dt`.`subtotal` 
+FROM `transaksi` `t` 
+JOIN `karyawan` `k` ON `t`.`id_karyawan` = `k`.`id_karyawan` 
+JOIN `detail_transaksi` `dt` ON `t`.`id_transaksi` = `dt`.`id_transaksi` 
+JOIN `menu` `m` ON `dt`.`id_menu` = `m`.`id_menu` 
+ORDER BY `t`.`waktu_transaksi` DESC;
+
+-- Menambahkan kolom pembayaran ke tabel transaksi
+ALTER TABLE `transaksi` 
+ADD COLUMN `uang_bayar` int DEFAULT 0 AFTER `total_bayar`,
+ADD COLUMN `kembalian` int DEFAULT 0 AFTER `uang_bayar`,
+ADD COLUMN `metode_bayar` varchar(20) DEFAULT 'Cash' AFTER `kembalian`,
+ADD COLUMN `status` varchar(20) DEFAULT 'Selesai' AFTER `metode_bayar`;
+
+-- Menambahkan kolom is_deleted ke tabel menu
+ALTER TABLE `menu` ADD COLUMN `is_deleted` tinyint(1) DEFAULT '0';
+
+-- Opsional: Update view menubasedonkategori agar hanya menampilkan menu yang belum dihapus
+CREATE OR REPLACE VIEW `menubasedonkategori` AS 
+SELECT `kat`.`nama_kategori`, `m`.`nama_menu`, `m`.`stok`, `m`.`harga` 
+FROM `kategori` `kat` 
+LEFT JOIN `menu` `m` ON `kat`.`id_kategori` = `m`.`id_kategori`
+WHERE `m`.`is_deleted` = 0
+ORDER BY `kat`.`nama_kategori` ASC;
+
+-- Membuat view laporan harian
+CREATE OR REPLACE VIEW `laporan_harian` AS
+SELECT 
+    DATE(`waktu_transaksi`) AS `tanggal`,
+    COUNT(`id_transaksi`) AS `total_transaksi`,
+    SUM(`total_bayar`) AS `total_pendapatan`
+FROM `transaksi`
+GROUP BY DATE(`waktu_transaksi`)
+ORDER BY `tanggal` DESC;
+
+-- PEMBERSIHAN (Hapus tabel jika sudah ada agar bisa import ulang tanpa error)
+DROP VIEW IF EXISTS `laporan_harian`, `transaksilengkap`, `menubasedonkategori`, `detailstruk`;
+DROP TABLE IF EXISTS `detail_transaksi`, `transaksi`, `menu`, `kategori`, `karyawan`;
+
+-- Struktur Karyawan
+CREATE TABLE `karyawan` (
+  `id_karyawan` varchar(10) NOT NULL,
+  `nama_karyawan` varchar(50) NOT NULL,
+  `jabatan` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `is_active` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id_karyawan`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Struktur Kategori
+CREATE TABLE `kategori` (
+  `id_kategori` varchar(10) NOT NULL,
+  `nama_kategori` varchar(50) NOT NULL,
+  PRIMARY KEY (`id_kategori`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Struktur Menu
+CREATE TABLE `menu` (
+  `id_menu` varchar(10) NOT NULL,
+  `nama_menu` varchar(50) NOT NULL,
+  `stok` int NOT NULL,
+  `harga` int NOT NULL,
+  `id_kategori` varchar(10) NOT NULL,
+  `is_deleted` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id_menu`),
+  FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Struktur Transaksi
+CREATE TABLE `transaksi` (
+  `id_transaksi` varchar(10) NOT NULL,
+  `waktu_transaksi` datetime NOT NULL,
+  `total_bayar` int NOT NULL,
+  `uang_bayar` int DEFAULT 0,
+  `kembalian` int DEFAULT 0,
+  `metode_bayar` varchar(20) DEFAULT 'Cash',
+  `status` varchar(20) DEFAULT 'Selesai',
+  `id_karyawan` varchar(10) NOT NULL,
+  PRIMARY KEY (`id_transaksi`),
+  FOREIGN KEY (`id_karyawan`) REFERENCES `karyawan` (`id_karyawan`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Struktur Detail Transaksi
+CREATE TABLE `detail_transaksi` (
+  `id_detailTransaksi` varchar(10) NOT NULL,
+  `id_menu` varchar(10) NOT NULL,
+  `id_transaksi` varchar(10) NOT NULL,
+  `jumlah` int NOT NULL,
+  `subtotal` int NOT NULL,
+  PRIMARY KEY (`id_detailTransaksi`),
+  FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id_menu`),
+  FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- VIEW Laporan Harian
+CREATE VIEW `laporan_harian` AS
+SELECT DATE(waktu_transaksi) AS tanggal, COUNT(id_transaksi) AS total_transaksi, SUM(total_bayar) AS total_pendapatan
+FROM transaksi GROUP BY DATE(waktu_transaksi) ORDER BY tanggal DESC;
+
+-- VIEW Transaksi Lengkap
+CREATE VIEW `transaksilengkap` AS 
+SELECT t.id_transaksi, t.waktu_transaksi, k.nama_karyawan, m.nama_menu, dt.jumlah, m.harga, dt.subtotal 
+FROM transaksi t JOIN karyawan k ON t.id_karyawan = k.id_karyawan 
+JOIN detail_transaksi dt ON t.id_transaksi = dt.id_transaksi 
+JOIN menu m ON dt.id_menu = m.id_menu 
+ORDER BY t.waktu_transaksi DESC;
+
+-- TRIGGER Update Stok
+DELIMITER $$
+CREATE TRIGGER `after_detail_transaksi_insert` AFTER INSERT ON `detail_transaksi` FOR EACH ROW BEGIN
+    UPDATE menu SET stok = stok - NEW.jumlah WHERE id_menu = NEW.id_menu;
+END$$
+DELIMITER ;
+
+
+
+
+
+
 
 
 
