@@ -464,10 +464,13 @@ END$$
 DELIMITER ;
 
 
+SELECT * FROM laporan_harian;
 
+INSERT INTO transaksi (id_transaksi, waktu_transaksi, total_bayar, id_karyawan) 
+VALUES ('TR_TEST', NOW(), 15000, 'K001');
 
-
-
+-- Lalu cek lagi view-nya
+SELECT * FROM laporan_harian;
 
 
 
