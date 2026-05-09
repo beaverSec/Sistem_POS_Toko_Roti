@@ -21,7 +21,7 @@ SETELAH ITU
 2. Buat login.php dan logout.php — cek username + password dari DB, simpan ke $_SESSION
    Cukup pakai session_start() dan $_SESSION['role'], tidak perlu JWT
 3. Buat proses/transaksi.php — terima data dari form kasir, hitung total + kembalian, simpan ke tabel transaksi dan detail_transaksi sekaligus
-4. Buat proses/menu_add.php, menu_edit.php, menu_delete.php — CRUD menu dengan soft delete
+4. Buat proses/menu_add.php, menu_edit.php, menu_delete.php — CRUD menu dengan soft delete ✅
    
 SETELAH ITU
 1. Tambahkan pengecekan stok sebelum transaksi diproses — tampilkan pesan error jika stok tidak cukup
