@@ -60,15 +60,16 @@ try {
             exit;
         }
 
-        $id_detail = 'DT-' . $id_transaksi . '-' . str_pad($counter, 2, '0', STR_PAD_LEFT);
-        $subtotal  = $item['harga'] * $item['qty'];
+        // Cukup gunakan angka unik yang pendek, misal DT + nomor urut global atau kombinasi unik 10 karakter
+        $id_detail = substr($id_transaksi, 2) . str_pad($counter, 3, '0', STR_PAD_LEFT); 
+// Hasil: 0001001 (7 Karakter, Aman masuk ke VARCHAR 10)
 
         $stmtDetail->execute([
             ':id_detail'    => $id_detail,
             ':id_menu'      => $id_menu,
             ':id_transaksi' => $id_transaksi,
             ':jumlah'       => $item['qty'],
-            ':subtotal'     => $subtotal,
+            ':subtotal'     => $item['harga'] * $item['qty'],
         ]);
         // Stok otomatis berkurang via TRIGGER di database
 
@@ -76,7 +77,8 @@ try {
     }
 
     $conn->commit();
-    header("Location: ../public/struk.php?id=$id_transaksi");
+    // Redirect balik ke kasir dengan ID transaksi → popup struk muncul otomatis
+    header("Location: ../public/kasir.php?sukses=1&id=$id_transaksi");
     exit;
 
 } catch (PDOException $e) {

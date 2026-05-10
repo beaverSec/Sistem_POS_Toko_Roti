@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Tokoroti - Kasir Dashboard</title>
+    <style>
+        /* CSS RESET & BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f0f2f5; display: flex; height: 100vh; }
+
+        /* SIDEBAR (Nuansa Biru Gelap sesuai gambar) */
+        .sidebar { width: 250px; background-color: #1a237e; color: white; display: flex; flex-direction: column; }
+        .sidebar-header { padding: 20px; font-size: 1.5rem; font-weight: bold; border-bottom: 1px solid #3949ab; text-align: center; }
+        .sidebar-menu { flex: 1; padding: 20px 0; }
+        .menu-item { padding: 15px 25px; cursor: pointer; transition: 0.3s; display: block; color: white; text-decoration: none; }
+        .menu-item:hover, .menu-item.active { background-color: #3949ab; border-left: 5px solid #8c9eff; }
+
+        /* MAIN CONTENT */
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        
+        /* NAVBAR */
+        .navbar { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .user-profile { display: flex; align-items: center; gap: 10px; }
+        .user-profile span { font-weight: 600; color: #1a237e; }
+
+        /* KASIR LAYOUT (GRID) */
+        .content-body { padding: 25px; }
+        .pos-grid { display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+
+        /* PRODUCT SECTION */
+        .product-list { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .category-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab { padding: 8px 15px; border-radius: 20px; border: 1px solid #1a237e; color: #1a237e; cursor: pointer; font-size: 0.9rem; }
+        .tab.active { background: #1a237e; color: white; }
+
+        .items-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .item-card { border: 1px solid #ddd; border-radius: 8px; padding: 10px; text-align: center; transition: 0.2s; cursor: pointer; }
+        .item-card:hover { border-color: #1a237e; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .item-card img { width: 100%; height: 100px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
+        .item-card h4 { font-size: 0.95rem; margin-bottom: 5px; color: #333; }
+        .item-card p { color: #1a237e; font-weight: bold; font-size: 0.9rem; }
+
+        /* CART SECTION */
+        .cart-panel { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); height: fit-content; }
+        .cart-title { border-bottom: 2px solid #f0f2f5; padding-bottom: 10px; margin-bottom: 15px; color: #1a237e; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        
+        .total-section { margin-top: 20px; padding-top: 15px; border-top: 2px dashed #ddd; }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: bold; color: #1a237e; margin-bottom: 15px; }
+        
+        /* BUTTONS */
+        .btn-pay { width: 100%; padding: 12px; background: #1a237e; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-pay:hover { background: #3949ab; }
+
+        /* TABLE STYLING FOR HISTORY/STOK */
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+        th { background: #1a237e; color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f8f9fa; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        .badge-success { background: #c8e6c9; color: #2e7d32; }
+        .badge-danger { background: #ffcdd2; color: #c62828; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">TOKO ROTI</div>
+        <div class="sidebar-menu">
+            <a href="#" class="menu-item active">Dashboard Kasir</a>
+            <a href="#" class="menu-item">Riwayat Transaksi</a>
+            <a href="#" class="menu-item">Cek Stok Menu</a>
+            <a href="#" class="menu-item">Laporan (Manajer)</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="navbar">
+            <div class="page-title">Dashboard Kasir</div>
+            <div class="user-profile">
+                <span>Halo, <strong>Paul Mescal</strong></span>
+                <button style="padding: 5px 10px; cursor: pointer;">Logout</button>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <div class="pos-grid">
+                
+                <div class="product-list">
+                    <div class="category-tabs">
+                        <div class="tab active">Semua</div>
+                        <div class="tab">Roti</div>
+                        <div class="tab">Pastry</div>
+                        <div class="tab">Kue Basah</div>
+                    </div>
+                    
+                    <div class="items-container">
+                        <div class="item-card">
+                            <img src="https://via.placeholder.com/150x100?text=Roti+Tawar" alt="Roti">
+                            <h4>Roti Tawar</h4>
+                            <p>Rp 15.000</p>
+                        </div>
+                        <div class="item-card">
+                            <img src="https://via.placeholder.com/150x100?text=Croissant" alt="Roti">
+                            <h4>Croissant</h4>
+                            <p>Rp 18.000</p>
+                        </div>
+                        <div class="item-card">
+                            <img src="https://via.placeholder.com/150x100?text=Donat" alt="Roti">
+                            <h4>Donat Cokelat</h4>
+                            <p>Rp 8.000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cart-panel">
+                    <h3 class="cart-title">Order #TR0012</h3>
+                    <div id="cart-items">
+                        <div class="cart-item">
+                            <span>Roti Tawar x 1</span>
+                            <span>Rp 15.000</span>
+                        </div>
+                        <div class="cart-item">
+                            <span>Croissant x 2</span>
+                            <span>Rp 36.000</span>
+                        </div>
+                    </div>
+
+                    <div class="total-section">
+                        <div class="total-row">
+                            <span>Total</span>
+                            <span>Rp 51.000</span>
+                        </div>
+                        <form>
+                            <label style="font-size: 0.8rem; color: #666;">Metode Bayar</label>
+                            <select style="width: 100%; padding: 8px; margin-bottom: 15px;">
+                                <option>Cash</option>
+                                <option>QRIS</option>
+                            </select>
+                            <button type="button" class="btn-pay">PROSES BAYAR</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
