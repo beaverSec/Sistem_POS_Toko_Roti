@@ -275,21 +275,35 @@ $totalManajer  = count(array_filter($karyawan, fn($k) => $k['jabatan'] === 'Mana
 
         <!-- TOAST -->
         <?php if ($pesan === 'tambah'): ?>
-        <div class="toast sukses">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Karyawan baru berhasil ditambahkan!
-        </div>
-        <?php elseif ($pesan === 'update'): ?>
-        <div class="toast sukses">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Data karyawan berhasil diperbarui!
-        </div>
-        <?php elseif ($pesan === 'hapus'): ?>
-        <div class="toast hapus">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
-            Karyawan berhasil dihapus.
-        </div>
-        <?php endif; ?>
+    <div class="toast sukses">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Karyawan baru berhasil ditambahkan!
+    </div>
+<?php elseif ($pesan === 'update'): ?>
+    <div class="toast sukses">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Data karyawan berhasil diperbarui!
+    </div>
+<?php elseif ($pesan === 'hapus'): ?>
+    <div class="toast hapus">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+        Karyawan berhasil dihapus.
+    </div>
+<?php elseif ($pesan === 'gagal_username'): ?>
+    <div class="toast hapus">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Username sudah digunakan, silakan pilih yang lain!
+    </div>
+<?php elseif ($pesan === 'gagal'): ?>
+    <div class="toast hapus">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>
+        Gagal menyimpan data (ID mungkin duplikat).
+    </div>
+<?php endif; ?>
 
         <!-- STAT CARDS -->
         <div class="stats-grid">

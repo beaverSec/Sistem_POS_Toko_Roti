@@ -175,9 +175,7 @@ unset($_SESSION['login_error']);
         </div>
 
         <div class="right-panel">
-            <div class="top-links">
-                Don't have an account? <a href="#">Create an account</a>
-            </div>
+
 
             <h2>Login</h2>
 
@@ -203,9 +201,6 @@ if (isset($_SESSION['login_error'])): ?>
                 <button type="submit" class="btn-login">Login</button>
             </form>
 
-            <div class="footer-links">
-                <a href="#">Forget your password?</a>
-            </div>
         </div>
     </div>
 

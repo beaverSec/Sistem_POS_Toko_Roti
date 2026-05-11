@@ -35,8 +35,6 @@ $kategori = $conn->query("SELECT * FROM kategori ORDER BY nama_kategori")->fetch
             --font:'Plus Jakarta Sans',sans-serif;
         }
         body { font-family:var(--font); background:#F0F4FB; color:var(--gray-800); min-height:100vh; display:flex; }
-
-        /* SIDEBAR — sama persis dengan inventori */
         .sidebar { width:var(--sidebar-w); background:var(--blue-500); min-height:100vh; display:flex; flex-direction:column; flex-shrink:0; position:sticky; top:0; height:100vh; }
         .sidebar-brand { padding:24px 20px 20px; border-bottom:1px solid rgba(255,255,255,.12); }
         .sidebar-brand-name { font-size:20px; font-weight:800; color:var(--white); letter-spacing:-.3px; }
@@ -50,8 +48,6 @@ $kategori = $conn->query("SELECT * FROM kategori ORDER BY nama_kategori")->fetch
         .sidebar-bottom { padding:12px; border-top:1px solid rgba(255,255,255,.1); }
         .nav-item.logout { color:rgba(255,255,255,.6); }
         .nav-item.logout:hover { background:rgba(255,255,255,.1); color:var(--white); }
-
-        /* MAIN */
         .main { flex:1; display:flex; flex-direction:column; min-width:0; }
         .topbar { background:var(--white); border-bottom:1px solid var(--gray-100); padding:0 28px; height:60px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
         .topbar-back { display:flex; align-items:center; gap:6px; color:var(--gray-400); text-decoration:none; font-size:13px; font-weight:600; transition:color .15s; }
@@ -59,66 +55,32 @@ $kategori = $conn->query("SELECT * FROM kategori ORDER BY nama_kategori")->fetch
         .topbar-back svg { width:16px; height:16px; }
         .topbar-sep { color:var(--gray-200); font-size:18px; }
         .topbar-title { font-size:16px; font-weight:800; }
-
-        /* CONTENT */
         .content { flex:1; overflow-y:auto; padding:32px 28px; display:flex; justify-content:center; }
         .form-card { background:var(--white); border-radius:var(--radius-lg); border:1px solid var(--gray-100); padding:28px 32px; width:100%; max-width:560px; height:fit-content; }
         .form-card-title { font-size:16px; font-weight:800; margin-bottom:6px; }
         .form-card-sub { font-size:13px; color:var(--gray-400); margin-bottom:24px; }
         .form-divider { border:none; border-top:1px solid var(--gray-100); margin:20px 0; }
-
         .form-group { margin-bottom:16px; }
         .form-label { display:block; font-size:12px; font-weight:700; color:var(--gray-600); text-transform:uppercase; letter-spacing:.4px; margin-bottom:6px; }
-        .form-control {
-            width:100%; padding:10px 14px;
-            border:1.5px solid var(--gray-200); border-radius:var(--radius-md);
-            font-family:var(--font); font-size:14px; color:var(--gray-800);
-            outline:none; background:var(--gray-50);
-            transition:border-color .15s, box-shadow .15s;
-        }
+        .form-control { width:100%; padding:10px 14px; border:1.5px solid var(--gray-200); border-radius:var(--radius-md); font-family:var(--font); font-size:14px; color:var(--gray-800); outline:none; background:var(--gray-50); transition:border-color .15s, box-shadow .15s; }
         .form-control:focus { border-color:var(--blue-400); box-shadow:0 0 0 3px rgba(59,142,232,.12); background:var(--white); }
         .form-control:disabled { opacity:.5; cursor:not-allowed; }
-        .form-control.select {
-            appearance:none;
-            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239094A4' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-            background-repeat:no-repeat; background-position:right 12px center;
-            padding-right:36px; cursor:pointer;
-        }
+        .form-control.select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239094A4' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:36px; cursor:pointer; }
         .form-hint { font-size:11px; color:var(--gray-400); margin-top:4px; }
         .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-
         .form-actions { display:flex; gap:10px; margin-top:24px; }
-        .btn-submit {
-            flex:1; padding:12px;
-            background:var(--blue-500); color:var(--white);
-            border:none; border-radius:var(--radius-md);
-            font-family:var(--font); font-size:14px; font-weight:700;
-            cursor:pointer; transition:background .15s;
-            box-shadow:0 3px 10px rgba(31,114,211,.3);
-        }
+        .btn-submit { flex:1; padding:12px; background:var(--blue-500); color:var(--white); border:none; border-radius:var(--radius-md); font-family:var(--font); font-size:14px; font-weight:700; cursor:pointer; transition:background .15s; box-shadow:0 3px 10px rgba(31,114,211,.3); }
         .btn-submit:hover { background:var(--blue-600); }
-        .btn-batal {
-            padding:12px 20px;
-            background:none; color:var(--gray-600);
-            border:1.5px solid var(--gray-200); border-radius:var(--radius-md);
-            font-family:var(--font); font-size:14px; font-weight:600;
-            text-decoration:none; text-align:center;
-            transition:all .15s;
-        }
+        .btn-batal { padding:12px 20px; background:none; color:var(--gray-600); border:1.5px solid var(--gray-200); border-radius:var(--radius-md); font-family:var(--font); font-size:14px; font-weight:600; text-decoration:none; text-align:center; transition:all .15s; }
         .btn-batal:hover { border-color:var(--gray-400); color:var(--gray-800); }
-
-        /* Preview gambar */
         .img-preview-wrap { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
-        .img-preview {
-            width:56px; height:56px; border-radius:var(--radius-md);
-            object-fit:cover; background:var(--gray-100); border:1px solid var(--gray-200);
-        }
-        .img-preview-placeholder {
-            width:56px; height:56px; border-radius:var(--radius-md);
-            background:linear-gradient(135deg,var(--blue-50),var(--gray-100));
-            display:flex; align-items:center; justify-content:center; font-size:24px;
-            border:1px solid var(--gray-200);
-        }
+        .img-preview { width:56px; height:56px; border-radius:var(--radius-md); object-fit:cover; background:var(--gray-100); border:1px solid var(--gray-200); }
+        .img-preview-placeholder { width:56px; height:56px; border-radius:var(--radius-md); background:linear-gradient(135deg,var(--blue-50),var(--gray-100)); display:flex; align-items:center; justify-content:center; font-size:24px; border:1px solid var(--gray-200); }
+        .upload-area { border:2px dashed var(--gray-200); border-radius:var(--radius-md); padding:20px; text-align:center; background:var(--gray-50); cursor:pointer; transition:border-color .15s; position:relative; }
+        .upload-area:hover { border-color:var(--blue-400); background:var(--blue-50); }
+        .upload-area input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+        .upload-area p { font-size:13px; color:var(--gray-400); font-weight:500; }
+        #preview-baru { width:80px; height:80px; border-radius:var(--radius-md); object-fit:cover; display:none; margin:8px auto 0; }
     </style>
 </head>
 <body>
@@ -169,7 +131,6 @@ $kategori = $conn->query("SELECT * FROM kategori ORDER BY nama_kategori")->fetch
             <div class="form-card-title">Edit Menu</div>
             <div class="form-card-sub">Perbarui informasi menu <?= htmlspecialchars($menu['nama_menu']) ?></div>
 
-            <!-- Preview gambar -->
             <div class="img-preview-wrap">
                 <?php if (!empty($menu['gambar'])): ?>
                 <img src="assets/<?= htmlspecialchars($menu['gambar']) ?>" class="img-preview" alt="preview">
@@ -184,8 +145,11 @@ $kategori = $conn->query("SELECT * FROM kategori ORDER BY nama_kategori")->fetch
 
             <hr class="form-divider">
 
-            <form action="../process/update.php" method="POST">
+            <!-- PENTING: enctype multipart/form-data agar file bisa diupload -->
+            <form action="../process/update.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id_menu" value="<?= htmlspecialchars($menu['id_menu']) ?>">
+                <!-- Kirim nama gambar lama agar tidak hilang kalau tidak diganti -->
+                <input type="hidden" name="gambar_lama" value="<?= htmlspecialchars($menu['gambar'] ?? '') ?>">
 
                 <div class="form-group">
                     <label class="form-label">ID Menu</label>
@@ -223,6 +187,16 @@ $kategori = $conn->query("SELECT * FROM kategori ORDER BY nama_kategori")->fetch
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-label">Ganti Foto Menu</label>
+                    <div class="upload-area">
+                        <input type="file" name="gambar" accept="image/*" onchange="previewGambar(this)">
+                        <p>Klik untuk ganti foto · JPG/PNG maks. 2MB</p>
+                        <p style="font-size:11px; color:var(--gray-400); margin-top:4px;">Kosongkan jika tidak ingin mengganti foto</p>
+                        <img id="preview-baru" src="" alt="preview baru">
+                    </div>
+                </div>
+
                 <div class="form-actions">
                     <a href="inventori.php" class="btn-batal">Batal</a>
                     <button type="submit" class="btn-submit">Simpan Perubahan</button>
@@ -231,5 +205,19 @@ $kategori = $conn->query("SELECT * FROM kategori ORDER BY nama_kategori")->fetch
         </div>
     </div>
 </div>
+
+<script>
+function previewGambar(input) {
+    const preview = document.getElementById('preview-baru');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 </body>
 </html>
