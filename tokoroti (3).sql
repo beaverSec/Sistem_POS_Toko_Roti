@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 11, 2026 at 05:34 AM
--- Server version: 8.0.43
+-- Generation Time: May 11, 2026 at 06:21 AM
+-- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 -- (See below for the actual view)
 --
 CREATE TABLE `detailstruk` (
-`harga` int
-,`id_transaksi` varchar(10)
-,`jumlah` int
+`id_transaksi` varchar(10)
 ,`nama_menu` varchar(50)
+,`jumlah` int
+,`harga` int
 ,`subtotal` int
 );
 
@@ -71,6 +71,8 @@ INSERT INTO `detail_transaksi` (`id_detailTransaksi`, `id_menu`, `id_transaksi`,
 ('0021002', 'MN10', 'TR0021', 1, 15000),
 ('0021003', 'MN05', 'TR0021', 1, 10000),
 ('0022001', 'MN09', 'TR0022', 2, 10000),
+('0023001', 'MN02', 'TR0023', 1, 200000),
+('0023002', 'MN06', 'TR0023', 1, 60000),
 ('DT-TR0008', 'MN05', 'TR0008', 1, 10000),
 ('DT0001', 'MN01', 'TR0001', 2, 30000),
 ('DT0002', 'MN02', 'TR0002', 1, 200000),
@@ -158,14 +160,14 @@ CREATE TABLE `menu` (
 
 INSERT INTO `menu` (`id_menu`, `nama_menu`, `stok`, `harga`, `gambar`, `id_kategori`, `is_deleted`) VALUES
 ('MN01', 'Roti Tawar', 9, 15000, 'roti_tawar.jpeg', 'KTG01', 0),
-('MN02', 'Birthday Cake', 7, 200000, 'birthday_cake.jpeg', 'KTG03', 0),
+('MN02', 'Birthday Cake', 6, 200000, 'birthday_cake.jpeg', 'KTG03', 0),
 ('MN03', 'Cheesecake', 13, 25000, 'cheesecake.jpeg', 'KTG03', 0),
 ('MN04', 'Croissant', 19, 15000, 'croissant.jpeg', 'KTG02', 0),
 ('MN05', 'Eclair', 20, 10000, 'eclair.jpeg', 'KTG02', 0),
-('MN06', 'Nastar', 10, 60000, 'nastar.jpeg', 'KTG04', 0),
+('MN06', 'Nastar', 9, 60000, 'nastar.jpeg', 'KTG04', 0),
 ('MN07', 'Chocolate Cookies', 9, 45000, 'chocolate_cookies.jpeg', 'KTG04', 0),
 ('MN08', 'Dadar Gulung', 12, 5000, 'dadar_gulung.jpeg', 'KTG03', 0),
-('MN09', 'Lemper', 29, 5000, 'lemper.jpeg', 'KTG03', 0),
+('MN09', 'Lemper', 29, 5000, NULL, 'KTG03', 0),
 ('MN10', 'Pain au Chocolat', 17, 15000, 'pain_au_chocolat.jpeg', 'KTG02', 0);
 
 -- --------------------------------------------------------
@@ -175,10 +177,10 @@ INSERT INTO `menu` (`id_menu`, `nama_menu`, `stok`, `harga`, `gambar`, `id_kateg
 -- (See below for the actual view)
 --
 CREATE TABLE `menubasedonkategori` (
-`harga` int
-,`nama_kategori` varchar(50)
+`nama_kategori` varchar(50)
 ,`nama_menu` varchar(50)
 ,`stok` int
+,`harga` int
 );
 
 -- --------------------------------------------------------
@@ -222,7 +224,8 @@ INSERT INTO `transaksi` (`id_transaksi`, `waktu_transaksi`, `total_bayar`, `uang
 ('TR0019', '2026-05-11 01:36:55', 10000, 10000, 0, 'Transfer', 'Selesai', 'K001'),
 ('TR0020', '2026-05-11 01:43:34', 15000, 15000, 0, 'Transfer', 'Selesai', 'K001'),
 ('TR0021', '2026-05-11 01:44:33', 30000, 45000, 15000, 'Cash', 'Selesai', 'K001'),
-('TR0022', '2026-05-11 01:59:57', 10000, 10000, 0, 'QRIS', 'Selesai', 'K001');
+('TR0022', '2026-05-11 01:59:57', 10000, 10000, 0, 'QRIS', 'Selesai', 'K001'),
+('TR0023', '2026-05-11 13:07:57', 260000, 300000, 40000, 'Cash', 'Selesai', 'K001');
 
 -- --------------------------------------------------------
 
@@ -231,40 +234,13 @@ INSERT INTO `transaksi` (`id_transaksi`, `waktu_transaksi`, `total_bayar`, `uang
 -- (See below for the actual view)
 --
 CREATE TABLE `transaksilengkap` (
-`id_karyawan` varchar(10)
-,`id_transaksi` varchar(10)
-,`nama_karyawan` varchar(50)
-,`status` varchar(20)
-,`subtotal` int
+`id_transaksi` varchar(10)
 ,`waktu_transaksi` datetime
+,`id_karyawan` varchar(10)
+,`nama_karyawan` varchar(50)
+,`subtotal` int
+,`status` varchar(20)
 );
-
--- --------------------------------------------------------
-
---
--- Structure for view `detailstruk`
---
-DROP TABLE IF EXISTS `detailstruk`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `detailstruk`  AS SELECT `dt`.`id_transaksi` AS `id_transaksi`, `m`.`nama_menu` AS `nama_menu`, `dt`.`jumlah` AS `jumlah`, `m`.`harga` AS `harga`, `dt`.`subtotal` AS `subtotal` FROM (`detail_transaksi` `dt` join `menu` `m` on((`dt`.`id_menu` = `m`.`id_menu`)))  ;
-
--- --------------------------------------------------------
-
---
--- Structure for view `menubasedonkategori`
---
-DROP TABLE IF EXISTS `menubasedonkategori`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `menubasedonkategori`  AS SELECT `kat`.`nama_kategori` AS `nama_kategori`, `m`.`nama_menu` AS `nama_menu`, `m`.`stok` AS `stok`, `m`.`harga` AS `harga` FROM (`kategori` `kat` left join `menu` `m` on((`kat`.`id_kategori` = `m`.`id_kategori`))) WHERE (`m`.`is_deleted` = 0) ORDER BY `kat`.`nama_kategori` ASC  ;
-
--- --------------------------------------------------------
-
---
--- Structure for view `transaksilengkap`
---
-DROP TABLE IF EXISTS `transaksilengkap`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaksilengkap`  AS SELECT `t`.`id_transaksi` AS `id_transaksi`, `t`.`waktu_transaksi` AS `waktu_transaksi`, `t`.`id_karyawan` AS `id_karyawan`, `k`.`nama_karyawan` AS `nama_karyawan`, `t`.`total_bayar` AS `subtotal`, `t`.`status` AS `status` FROM (`transaksi` `t` join `karyawan` `k` on((`t`.`id_karyawan` = `k`.`id_karyawan`)))  ;
 
 --
 -- Indexes for dumped tables
@@ -303,6 +279,33 @@ ALTER TABLE `menu`
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id_transaksi`),
   ADD KEY `id_karyawan` (`id_karyawan`);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `detailstruk`
+--
+DROP TABLE IF EXISTS `detailstruk`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `detailstruk`  AS SELECT `dt`.`id_transaksi` AS `id_transaksi`, `m`.`nama_menu` AS `nama_menu`, `dt`.`jumlah` AS `jumlah`, `m`.`harga` AS `harga`, `dt`.`subtotal` AS `subtotal` FROM (`detail_transaksi` `dt` join `menu` `m` on((`dt`.`id_menu` = `m`.`id_menu`))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `menubasedonkategori`
+--
+DROP TABLE IF EXISTS `menubasedonkategori`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `menubasedonkategori`  AS SELECT `kat`.`nama_kategori` AS `nama_kategori`, `m`.`nama_menu` AS `nama_menu`, `m`.`stok` AS `stok`, `m`.`harga` AS `harga` FROM (`kategori` `kat` left join `menu` `m` on((`kat`.`id_kategori` = `m`.`id_kategori`))) WHERE (`m`.`is_deleted` = 0) ORDER BY `kat`.`nama_kategori` ASC ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `transaksilengkap`
+--
+DROP TABLE IF EXISTS `transaksilengkap`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transaksilengkap`  AS SELECT `t`.`id_transaksi` AS `id_transaksi`, `t`.`waktu_transaksi` AS `waktu_transaksi`, `t`.`id_karyawan` AS `id_karyawan`, `k`.`nama_karyawan` AS `nama_karyawan`, `t`.`total_bayar` AS `subtotal`, `t`.`status` AS `status` FROM (`transaksi` `t` join `karyawan` `k` on((`t`.`id_karyawan` = `k`.`id_karyawan`))) ;
 
 --
 -- Constraints for dumped tables
