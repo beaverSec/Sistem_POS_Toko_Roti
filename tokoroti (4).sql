@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 11, 2026 at 08:16 AM
+-- Generation Time: May 11, 2026 at 09:47 AM
 -- Server version: 8.0.43
 -- PHP Version: 8.1.10
 
@@ -165,13 +165,14 @@ INSERT INTO `menu` (`id_menu`, `nama_menu`, `stok`, `harga`, `gambar`, `id_kateg
 ('MN03', 'Cheesecake', 13, 25000, 'cheesecake.jpeg', 'KTG03', 0),
 ('MN04', 'Croissant', 19, 15000, 'croissant.jpeg', 'KTG02', 0),
 ('MN05', 'Eclair', 20, 10000, 'eclair.jpeg', 'KTG02', 0),
-('MN06', 'Nastar', 9, 60000, 'nastar.jpeg', 'KTG04', 0),
-('MN07', 'Chocolate Cookies', 12, 45000, 'menu_1778482561_6a017d81ee6c6.jpeg', 'KTG04', 0),
+('MN06', 'Nastar', 10, 60000, 'nastar.jpeg', 'KTG04', 0),
+('MN07', 'Chocolate Cookies', 12, 8500, 'menu_1778482561_6a017d81ee6c6.jpeg', 'KTG04', 0),
 ('MN08', 'Dadar Gulung', 12, 5000, 'dadar_gulung.jpeg', 'KTG03', 0),
 ('MN09', 'Lemper', 29, 5000, 'menu_1778482514_6a017d529b9b1.jpeg', 'KTG03', 0),
 ('MN10', 'Pain au Chocolat', 17, 15000, 'pain_au_chocolat.jpeg', 'KTG02', 0),
 ('MN11', 'Saltbread', 6, 19998, 'menu_1778482354_6a017cb28ff92.jpeg', 'KTG02', 1),
-('MN12', 'Bika Ambon', 0, 7000, 'menu_1778485266_6a0188122c83a.jpeg', 'KTG03', 1);
+('MN12', 'Bika Ambon', 0, 7000, 'menu_1778485266_6a0188122c83a.jpeg', 'KTG03', 1),
+('MN13', 'Kue Lapis', 5, 450000, 'menu_1778492578_6a01a4a28b11b.jpeg', 'KTG03', 0);
 
 -- --------------------------------------------------------
 
