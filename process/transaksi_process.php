@@ -78,7 +78,7 @@ try {
 
     $conn->commit();
     // Redirect balik ke kasir dengan ID transaksi → popup struk muncul otomatis
-    header("Location: ../public/kasir.php?sukses=1&id=$id_transaksi");
+    header("Location: ../public/struk.php?id=$id_transaksi");
     exit;
 
 } catch (PDOException $e) {

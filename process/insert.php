@@ -20,7 +20,7 @@ try {
         ':id_kategori' => $_POST['id_kategori'],
         ':gambar'      => $_POST['gambar'] // Pastikan di form tambah.php input gambarnya bernama 'gambar'
     ]);
-    header("Location: ../public/index.php?status=sukses");
+    header("Location: ../public/inventori.php?pesan=tambah");
 } catch (PDOException $e) {
     echo "Gagal menambah data: " . $e->getMessage();
 }

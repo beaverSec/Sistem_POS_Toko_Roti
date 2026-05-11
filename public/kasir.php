@@ -19,7 +19,11 @@ $kategori = $conn->query(
 )->fetchAll(PDO::FETCH_ASSOC);
 
 $pesan = $_GET['pesan'] ?? '';
+
+// Tangkap parameter sukses dari transaksi_process.php
+$sukses_id = ($_GET['sukses'] ?? '') === '1' ? ($_GET['id'] ?? '') : '';
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>

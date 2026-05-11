@@ -25,7 +25,7 @@ try {
         ':id'       => $_POST['id_menu']
     ]);
 
-    header("Location: ../public/index.php?status=updated");
+    header("Location: ../public/inventori.php?pesan=edit");
     exit();
 } catch (PDOException $e) {
     echo "Gagal mengupdate data: " . $e->getMessage();

@@ -34,7 +34,7 @@ CREATE TABLE `detailstruk` (
 ,`nama_menu` varchar(50)
 ,`subtotal` int
 );
-
+no
 -- --------------------------------------------------------
 
 --
