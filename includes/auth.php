@@ -3,17 +3,23 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Cek apakah user sudah login
+/**
+ * CEK LOGIN DASAR
+ * Digunakan di setiap halaman admin/kasir agar tidak bisa diakses tanpa login.
+ */
 if (!isset($_SESSION['id_karyawan'])) {
-    // Jika tidak ada session, lempar ke halaman login (index.php)
-    // Gunakan path absolut agar tidak error saat dipanggil dari subfolder
+    // Jika tidak ada session, tendang ke halaman login utama
     header("Location: /TokoRoti/public/index.php"); 
     exit;
 }
 
+/**
+ * CEK ROLE (Fungsi yang hilang tadi)
+ * Digunakan untuk membatasi akses, misal: Kasir dilarang masuk ke Edit Menu.
+ */
 function requireRole(string $role): void {
     if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
-        // Jika role tidak sesuai (misal Kasir coba masuk Inventori)
+        // Jika role tidak sesuai, lempar ke halaman kasir
         header("Location: /TokoRoti/public/kasir.php");
         exit;
     }
