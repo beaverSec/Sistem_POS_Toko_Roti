@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 10, 2026 at 09:38 AM
+-- Generation Time: May 11, 2026 at 05:34 AM
 -- Server version: 8.0.43
 -- PHP Version: 8.1.10
 
@@ -34,7 +34,7 @@ CREATE TABLE `detailstruk` (
 ,`nama_menu` varchar(50)
 ,`subtotal` int
 );
-no
+
 -- --------------------------------------------------------
 
 --
@@ -55,6 +55,22 @@ CREATE TABLE `detail_transaksi` (
 
 INSERT INTO `detail_transaksi` (`id_detailTransaksi`, `id_menu`, `id_transaksi`, `jumlah`, `subtotal`) VALUES
 ('0011001', 'MN01', 'TR0011', 1, 15000),
+('0012001', 'MN03', 'TR0012', 1, 25000),
+('0013001', 'MN05', 'TR0013', 1, 10000),
+('0014001', 'MN08', 'TR0014', 1, 5000),
+('0015001', 'MN08', 'TR0015', 1, 5000),
+('0015002', 'MN07', 'TR0015', 1, 45000),
+('0016001', 'MN04', 'TR0016', 1, 15000),
+('0016002', 'MN10', 'TR0016', 1, 15000),
+('0017001', 'MN09', 'TR0017', 1, 5000),
+('0018001', 'MN10', 'TR0018', 1, 15000),
+('0019001', 'MN09', 'TR0019', 2, 10000),
+('0020001', 'MN09', 'TR0020', 1, 5000),
+('0020002', 'MN05', 'TR0020', 1, 10000),
+('0021001', 'MN08', 'TR0021', 1, 5000),
+('0021002', 'MN10', 'TR0021', 1, 15000),
+('0021003', 'MN05', 'TR0021', 1, 10000),
+('0022001', 'MN09', 'TR0022', 2, 10000),
 ('DT-TR0008', 'MN05', 'TR0008', 1, 10000),
 ('DT0001', 'MN01', 'TR0001', 2, 30000),
 ('DT0002', 'MN02', 'TR0002', 1, 200000),
@@ -143,14 +159,14 @@ CREATE TABLE `menu` (
 INSERT INTO `menu` (`id_menu`, `nama_menu`, `stok`, `harga`, `gambar`, `id_kategori`, `is_deleted`) VALUES
 ('MN01', 'Roti Tawar', 9, 15000, 'roti_tawar.jpeg', 'KTG01', 0),
 ('MN02', 'Birthday Cake', 7, 200000, 'birthday_cake.jpeg', 'KTG03', 0),
-('MN03', 'Cheesecake', 5, 25000, 'cheesecake.jpeg', 'KTG03', 0),
-('MN04', 'Croissant', 20, 15000, 'croissant.jpeg', 'KTG02', 0),
-('MN05', 'Eclair', 23, 10000, 'eclair.jpeg', 'KTG02', 0),
+('MN03', 'Cheesecake', 13, 25000, 'cheesecake.jpeg', 'KTG03', 0),
+('MN04', 'Croissant', 19, 15000, 'croissant.jpeg', 'KTG02', 0),
+('MN05', 'Eclair', 20, 10000, 'eclair.jpeg', 'KTG02', 0),
 ('MN06', 'Nastar', 10, 60000, 'nastar.jpeg', 'KTG04', 0),
-('MN07', 'Chocolate Cookies', 10, 45000, 'chocolate_cookies.jpeg', 'KTG04', 0),
-('MN08', 'Dadar Gulung', 15, 5000, 'dadar_gulung.jpeg', 'KTG03', 0),
-('MN09', 'Lemper', 35, 5000, 'lemper.jpeg', 'KTG03', 0),
-('MN10', 'Pain au Chocolat', 20, 15000, 'pain_au_chocolat.jpeg', 'KTG02', 0);
+('MN07', 'Chocolate Cookies', 9, 45000, 'chocolate_cookies.jpeg', 'KTG04', 0),
+('MN08', 'Dadar Gulung', 12, 5000, 'dadar_gulung.jpeg', 'KTG03', 0),
+('MN09', 'Lemper', 29, 5000, 'lemper.jpeg', 'KTG03', 0),
+('MN10', 'Pain au Chocolat', 17, 15000, 'pain_au_chocolat.jpeg', 'KTG02', 0);
 
 -- --------------------------------------------------------
 
@@ -195,7 +211,18 @@ INSERT INTO `transaksi` (`id_transaksi`, `waktu_transaksi`, `total_bayar`, `uang
 ('TR0006', '2026-03-24 20:50:30', 15000, 0, 0, 'Cash', 'Selesai', 'K001'),
 ('TR0008', '2026-03-24 20:52:53', 10000, 0, 0, 'Cash', 'Selesai', 'K001'),
 ('TR0010', '2026-04-24 13:27:22', 0, 0, 0, 'Cash', 'Selesai', 'K001'),
-('TR0011', '2026-05-10 12:20:57', 15000, 20000, 5000, 'Cash', 'Selesai', 'K001');
+('TR0011', '2026-05-10 12:20:57', 15000, 20000, 5000, 'Cash', 'Selesai', 'K001'),
+('TR0012', '2026-05-11 00:56:51', 25000, 50000, 25000, 'Cash', 'Selesai', 'K001'),
+('TR0013', '2026-05-11 00:57:07', 10000, 10000, 0, 'QRIS', 'Selesai', 'K001'),
+('TR0014', '2026-05-11 01:18:51', 5000, 10000, 5000, 'Cash', 'Selesai', 'K001'),
+('TR0015', '2026-05-11 01:21:05', 50000, 50000, 0, 'Transfer', 'Selesai', 'K001'),
+('TR0016', '2026-05-11 01:23:42', 30000, 30000, 0, 'QRIS', 'Selesai', 'K001'),
+('TR0017', '2026-05-11 01:27:56', 5000, 5000, 0, 'QRIS', 'Selesai', 'K001'),
+('TR0018', '2026-05-11 01:36:10', 15000, 15000, 0, 'QRIS', 'Selesai', 'K001'),
+('TR0019', '2026-05-11 01:36:55', 10000, 10000, 0, 'Transfer', 'Selesai', 'K001'),
+('TR0020', '2026-05-11 01:43:34', 15000, 15000, 0, 'Transfer', 'Selesai', 'K001'),
+('TR0021', '2026-05-11 01:44:33', 30000, 45000, 15000, 'Cash', 'Selesai', 'K001'),
+('TR0022', '2026-05-11 01:59:57', 10000, 10000, 0, 'QRIS', 'Selesai', 'K001');
 
 -- --------------------------------------------------------
 
